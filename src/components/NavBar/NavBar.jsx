@@ -1,7 +1,11 @@
 import React from 'react';
 
 const NavBar = () => {
-    console.log('¡Aquí va ir un Menú!')
+    return (
+        <div>
+          <p>¡Aquí va ir una Barra de Navegación!</p>
+        </div>
+      );
 }
 
 export default NavBar;

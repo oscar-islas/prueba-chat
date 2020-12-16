@@ -1,7 +1,6 @@
 import React from "react";
 import "./Denied.css";
-import pngegg from "../imagenLogin/pngegg.png";
-import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router";
 
 export default function Denied(props) {
   const history = useHistory();
@@ -19,7 +18,7 @@ export default function Denied(props) {
       <div className="otherD">
         <h3>¡ENTRENADOR NO IDENTIFCADO!</h3>
         <img
-          src={pngegg}
+          //src={}
           alt="imagen pikachu enojado"
           width="140px"
           height="130px"

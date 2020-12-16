@@ -1,5 +1,5 @@
-import React, { Suspense } from "react";
-import { Router, Route, Switch } from "react-router";
+import React, { Suspense, Spinner } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/NavBar/NavBar.jsx";
 import Home from "./components/Home/Home.jsx";
@@ -7,23 +7,29 @@ import LogIn from "./components/LogIn/LogIn.jsx";
 import Register from "./components/Register/Register.jsx";
 import ProtectedComponent from "./components/ProtectedComponent/ProtectedComponent";
 
-const App = () => (
-  <Suspense fallback="Cargando para comenzar El Cotorreo... ">
+export default function App() {
+  return (
     <Router>
-      <Route exact path="/login" component={LogIn} />
-      <Route exact path="/register" component={Register} />
       <Switch>
+        <Route exact path="/">
+          <Suspense fallback={<Spinner />}>
+            <LogIn />
+          </Suspense>
+        </Route>
+        <Route exact path="/register" component={Register} />
         <ProtectedComponent>
-          <NavBar />
-          <Route exact path="/chat" component={Home} />
+          <Suspense fallback={<Spinner />}>
+            <NavBar />
+            <Route exact path="/chat" component={Home} />
+          </Suspense>
         </ProtectedComponent>
         <ProtectedComponent>
-          <NavBar />
-          <Route exact path="/chat/:id" component={Home} />
+          <Suspense fallback={<Spinner />}>
+            <NavBar />
+            <Route exact path="/chat/:id" component={Home} />
+          </Suspense>
         </ProtectedComponent>
       </Switch>
     </Router>
-  </Suspense>
-);
-
-export default App;
+  );
+}

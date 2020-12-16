@@ -1,7 +1,11 @@
 import React from 'react';
 
 const Register = () => {
-    console.log('¡Identifiquense Bananas!')
+    return (
+        <div>
+          <p>¡Identifiquense Bananas!</p>
+        </div>
+      );
 }
 
 export default Register;
