@@ -1,7 +1,7 @@
-import React, {useState} from "react";
+import React from "react";
 import Dropdown from 'react-bootstrap/Dropdown';
 import 'bootstrap/dist/css/bootstrap.css';
-import {useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { logout } from '../actions/authActions';
 import { useHistory } from "react-router-dom";
 
@@ -9,14 +9,10 @@ export default function MenuProfile(props) {
   
   const dispatch = useDispatch(); 
   const history = useHistory();
-  let [closem, setCloseprofile] = useState("false");
 
-  const closeMenu = () => {
-    setCloseprofile(!closem);
-  }
 
   const logoutfn = async() => {
- 
+
     try{
       await dispatch(logout(false));
       history.push("/");

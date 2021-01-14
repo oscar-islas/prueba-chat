@@ -1,6 +1,6 @@
 const INITIAL_STATE = {
     user: false,
-    sesionActive:false,
+    sesionActive:true,
     userMessenger:""
 }
 
