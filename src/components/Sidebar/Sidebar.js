@@ -9,15 +9,18 @@ import { useSelector } from "react-redux";
 import SidebarChat from "../SidebarChat/SidebarChat";
 import MenuProfile from "../menuProfile";
 
-const Sidebar = () => {
+const Sidebar = (props) => {
   let [showm, setshowprofile] = useState("false");
+  //let [closem, setCloseprofile] = useState("false");
   const user = useSelector((state) => state.auth);
 
   const showMenu = () => {
     setshowprofile(!showm);
   };
 
-  return (
+  //setCloseprofile (props.closeM);
+
+  return ( 
     <div className="sidebar">
       <div className="sidebar__header">
         <Avatar src={`${user.user.photoURL}`} />
@@ -33,6 +36,7 @@ const Sidebar = () => {
             <MoreVertIcon onClick={showMenu}/>
           </div>
           {showm ? null : <MenuProfile />}
+          {/*closem || showm ? null: (<MenuProfile />, setCloseprofile (props.closeM))*/}
         </div>
       </div>
       <div className="sidebar__search">

@@ -6,7 +6,7 @@ import firebase from "../firebase";
 //5. checkActiveSession
 
 //Actions Creators
-const setUser = (userObj) => {
+export const setUser = (userObj) => {
   //Una vez que el usuario inicie sesión guardarmos los datos del usuario en el store
   return {
     type: "SET_USER",
@@ -22,7 +22,7 @@ export const login = (provider, email, password) => {
           let { user } = await firebase
             .auth()
             .signInWithEmailAndPassword(email, password);
-          console.log(user);
+          //console.log(user);
           dispatch(setUser(user));
         } else {
           if (provider === "google") {
@@ -30,23 +30,30 @@ export const login = (provider, email, password) => {
             let { user } = await firebase
               .auth()
               .signInWithPopup(googleProvider);
-            console.log(user);
+            //console.log(user);
             dispatch(setUser(user));
-            console.log(user);
+            //console.log(user);
+            getUsers(user.email, user.displayName, "", user.uid, user.photoURL);
           }
-          if(provider === "facebook"){
-              let facebookProvider = new firebase.auth.FacebookAuthProvider();
-              let { user } = await firebase
-                .auth()
-                .signInWithPopup(facebookProvider);
-            console.log(user);
+          if (provider === "facebook") {
+            let facebookProvider = new firebase.auth.FacebookAuthProvider();
+            let { user, credential } = await firebase
+              .auth()
+              .signInWithPopup(facebookProvider);
+            let userupdt = firebase.auth().currentUser;
+            userupdt.updateProfile({
+              photoURL:
+                `https://graph.facebook.com/${user.providerData[0].uid}/picture?access_token=${credential.accessToken}`,
+            });
+            //console.log(user);
             dispatch(setUser(user));
-            console.log(user);
+            //console.log(user);
+            getUsers(user.email, user.displayName, "", user.uid, user.photoURL);
           }
         }
         resolve(true);
       } catch (error) {
-        console.log(error);
+        //console.log(error);
         reject(error);
       }
     });
@@ -66,12 +73,12 @@ export const Register = (email, password, name, lastname, namec) => {
           photoURL:
             "https://upload.wikimedia.org/wikipedia/commons/f/f4/User_Avatar_2.png",
         });
-        postNewUsser(email, name, lastname, user.uid);
+        postNewUser(email, name, lastname, user.uid, "https://upload.wikimedia.org/wikipedia/commons/f/f4/User_Avatar_2.png");
         dispatch(setUser(user));
 
         resolve(true);
       } catch (error) {
-        console.log(error);
+        //console.log(error);
         reject(error);
       }
     });
@@ -85,7 +92,7 @@ export const forgotPassword = (email) => {
         await auth.sendPasswordResetEmail(email);
         resolve(true);
       } catch (error) {
-        console.log(error);
+        //console.log(error);
         reject(error);
       }
     });
@@ -108,7 +115,18 @@ export const checkActiveSession = (sesionactive) => {
   };
 };
 
-export const postNewUsser = async (email, name, lastname, uid) => {
+export const getUsers = async (email, name, lastname, uid, photoURL) => {
+  let response = await fetch(`https://academlo-whats.herokuapp.com/api/v1/users`);
+  let responseJ = await response.json();
+  let findUser = responseJ.find(user => user.uid === uid );
+  if(findUser){
+
+  }
+  else{ postNewUser(email, name, lastname, uid, photoURL);}
+  console.log(responseJ);
+}
+
+export const postNewUser = async (email, name, lastname, uid, photoURL) => {
   let response = await fetch(
     `https://academlo-whats.herokuapp.com/api/v1/users`,
     {
@@ -122,12 +140,12 @@ export const postNewUsser = async (email, name, lastname, uid) => {
         email: email,
         uid: uid,
         username: name + " " + lastname,
-        photoUrl:
-          "https://upload.wikimedia.org/wikipedia/commons/f/f4/User_Avatar_2.png",
+        photoUrl: photoURL,
+          //"https://upload.wikimedia.org/wikipedia/commons/f/f4/User_Avatar_2.png",
       }),
     }
   );
   let results = await response.json();
-  console.log(results);
+  //console.log(results);
   return results;
 };
