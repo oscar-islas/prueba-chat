@@ -7,7 +7,7 @@ import LoginContainer from "./containers/LoginContainer";
 import RegisterContainer from "./containers/RegisterContainer";
 import ForgotpasswordContainer from "./containers/ForgotpasswordContainer";
 import ProtectedComponent from "./components/ProtectedComponent/ProtectedComponent";
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux';
 import firebase from "./firebase";
 import { setUser, checkActiveSession } from "./actions/authActions";
 
@@ -26,6 +26,7 @@ export default function App() {
         // No user is signed in.
       }
     });
+    // eslint-disable-next-line
   },[]);
 
   return (

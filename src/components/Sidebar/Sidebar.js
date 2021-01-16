@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef } from "react";
 import "./Sidebar.css";
 import ChatIcon from "@material-ui/icons/Chat";
 import DonutLargeIcon from "@material-ui/icons/DonutLarge";
@@ -10,17 +10,38 @@ import SidebarChat from "../SidebarChat/SidebarChat";
 import MenuProfile from "../menuProfile";
 
 const Sidebar = (props) => {
-  let [showm, setshowprofile] = useState("false");
+  //let [showm, setshowprofile] = useState("false");
   //let [closem, setCloseprofile] = useState("false");
   const user = useSelector((state) => state.auth);
+  const menu = useRef(null);
+  useOutsideAlerter(menu);
 
-  const showMenu = () => {
-    setshowprofile(!showm);
-  };
+  function useOutsideAlerter(ref) {
+    useEffect(() => {
+        /**
+         * Alert if clicked on outside of element
+         */
+        function handleClickOutside(event) {
+            if (ref.current && !ref.current.contains(event.target)) {
+                props.closeMenu();
+            }
+        }
+        // Bind the event listener
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            // Unbind the event listener on clean up
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [ref]);
+}
+
+  // const showMenu = () => {
+  //   setshowprofile(!showm);
+  // };
 
   //setCloseprofile (props.closeM);
 
-  return ( 
+  return (
     <div className="sidebar">
       <div className="sidebar__header">
         <Avatar src={`${user.user.photoURL}`} />
@@ -32,11 +53,13 @@ const Sidebar = (props) => {
           <IconButton>
             <ChatIcon />
           </IconButton>
-          <div>
-            <MoreVertIcon onClick={showMenu}/>
+          <div ref={menu} className="dropdown_menu">
+            <div>
+              <MoreVertIcon onClick={props.showMenu} />
+            </div>
+            {/*showm ? null : <MenuProfile />*/}
+            {props.closeM ? null : <MenuProfile />}
           </div>
-          {showm ? null : <MenuProfile />}
-          {/*closem || showm ? null: (<MenuProfile />, setCloseprofile (props.closeM))*/}
         </div>
       </div>
       <div className="sidebar__search">

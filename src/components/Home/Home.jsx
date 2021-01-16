@@ -6,17 +6,23 @@ import Chat from "../Chat/Chat";
 
 function Home() {
   const [messages, setMessages] = useState([]);
-  let [closem, setCloseprofile] = useState("false");
+  let [closem, setCloseprofile] = useState(true);
   
   const closeMenu = () => {
-    setCloseprofile(false);
+    setCloseprofile(true);
   }
+
+  const showMenu = () => {
+    setCloseprofile(!closem);
+  };
+
+  //onClick={closeMenu}
 
   return (
     //user ? <chat /> : <gif />
-    <div className="app" onClick={closeMenu}>
+    <div className="app">
       <div className="app__body">
-        <Sidebar closeM={closem}/>
+        <Sidebar closeM={closem} showMenu={showMenu} closeMenu={closeMenu}/>
         <Chat messages={messages} />
       </div>
     </div>
