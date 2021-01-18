@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Sidebar.css";
 import ChatIcon from "@material-ui/icons/Chat";
 import DonutLargeIcon from "@material-ui/icons/DonutLarge";
@@ -13,6 +13,7 @@ const Sidebar = (props) => {
   const user = useSelector((state) => state.auth);
   const menu = useRef(null);
   useOutsideAlerter(menu);
+  const [conversations,setConversations]= useState([]);
 
   function useOutsideAlerter(ref) {
     useEffect(() => {
@@ -31,6 +32,35 @@ const Sidebar = (props) => {
     }, [ref]);
 }
 
+useEffect(()=>{
+
+  const getConversations = async() => {
+    try {
+      const res = await fetch('https://academlo-whats.herokuapp.com/api/v1/users/1/conversations')
+      const response = await res.json();
+      //console.log(idToSearch);
+      const activeConversations= await response.filter(element=>{
+        
+          return(
+            element.members[0]===props.id||element.members[1]===props.id
+          )
+          // if(element.members[0]===props.id||element.members[1]===props.id){
+          //     //console.log(element);
+          //     return(element);
+          // }
+          
+      })
+      //console.log(activeConversations);
+      setConversations(activeConversations);
+    } 
+    catch (error) {
+      console.log(error)
+    }
+  }
+  getConversations();
+
+},[props.id]);
+
   return (
     <div className="sidebar">
       <div className="sidebar__header">
@@ -40,7 +70,7 @@ const Sidebar = (props) => {
           <IconButton>
             <DonutLargeIcon />
           </IconButton>
-          <IconButton>
+          <IconButton onClick={props.newchat}>
             <ChatIcon />
           </IconButton>
           <div ref={menu} className="dropdown_menu">
@@ -58,9 +88,16 @@ const Sidebar = (props) => {
         </div>
       </div>
       <div className="sidebar__chats">
-        <SidebarChat />
-        <SidebarChat />
-        <SidebarChat />
+      {
+            conversations.map((element,index)=>{
+              return(
+                <SidebarChat key={index} name={element.membersObj[0].username}  photo={element.membersObj[0].photoUrl} conversation={element} selectConversation={props.selectConversation} />
+              )
+          })
+        }
+        
+        {/* <SidebarChat />
+        <SidebarChat /> */}
       </div>
     </div>
   );
