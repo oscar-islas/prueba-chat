@@ -38,7 +38,7 @@
   padding: 10px;
   width: fit-content;
   border-radius: 10px;
-  background-color: #cafbff;
+  background-color: #24666b;
   margin-left: auto;
   margin-bottom: 30px;
 }
@@ -87,4 +87,7 @@
 .chat__footer > .MuiSvgIcon-root {
   padding: 10px;
   color: gray;
+}
+.chat__input {
+  width: 70%;
 }

@@ -10,6 +10,8 @@ import ProtectedComponent from "./components/ProtectedComponent/ProtectedCompone
 import { useSelector, useDispatch } from 'react-redux'
 import firebase from "./firebase";
 import { setUser, checkActiveSession } from "./actions/authActions";
+import { Provider } from "react-redux";
+import store from "./store"
 
 export default function App() {
   const user = useSelector(state => state.auth)
@@ -26,10 +28,11 @@ export default function App() {
         // No user is signed in.
       }
     });
-  },[]);
+  },[dispatch]);
 
   return (
     <Router>
+        <Provider store={store}>
       <Switch>
         <Route exact path="/">
             <LoginContainer />
@@ -45,6 +48,7 @@ export default function App() {
             <Route exact path="/chat/:id" component={Home} />
         </ProtectedComponent>
       </Switch>
+      </Provider>
     </Router>
   );
 }

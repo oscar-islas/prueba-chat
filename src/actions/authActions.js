@@ -123,7 +123,7 @@ export const getUsers = async (email, name, lastname, uid, photoURL) => {
 
   }
   else{ postNewUser(email, name, lastname, uid, photoURL);}
-  console.log(responseJ);
+  //console.log(responseJ);
 }
 
 export const postNewUser = async (email, name, lastname, uid, photoURL) => {
