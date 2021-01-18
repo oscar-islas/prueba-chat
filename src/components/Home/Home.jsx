@@ -8,8 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 
 function Home() {
-  const user = useSelector(state => state.auth)
-  //const [messages, setMessages] = useState([]);
+  const user = useSelector(state => state.auth);
   const dispatch = useDispatch();
   let [closem, setCloseprofile] = useState(true);
   const [searchChat, setSearchChat] = useState(false);
