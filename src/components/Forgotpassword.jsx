@@ -44,7 +44,7 @@ export default function ForgotpasswordComponent(props) {
       await dispatch(forgotPassword(refEmail.current.value));
       swal(
         "¡Revisa tu buzón!",
-        "¡Correo derecuperación de contraseña enviado!",
+        "¡Correo de recuperación para contraseña enviado!",
         "success"
       );
       history.push("/");
