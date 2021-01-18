@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { useDispatch } from 'react-redux'
 import { logout } from '../actions/authActions';
 import { useHistory } from "react-router-dom";
+import swal from 'sweetalert';
 
 export default function MenuProfile(props) {
   
@@ -17,7 +18,8 @@ export default function MenuProfile(props) {
       await dispatch(logout(false));
       history.push("/");
     }catch(error){
-      console.log("Las credenciales para el usuario son incorrectas");
+      swal("Error", "¡Las credenciales para el usuario son incorrectas!", "error");
+      //console.log("Las credenciales para el usuario son incorrectas");
     }
   }
    return(<>

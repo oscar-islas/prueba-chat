@@ -10,17 +10,13 @@ import SidebarChat from "../SidebarChat/SidebarChat";
 import MenuProfile from "../menuProfile";
 
 const Sidebar = (props) => {
-  //let [showm, setshowprofile] = useState("false");
-  //let [closem, setCloseprofile] = useState("false");
   const user = useSelector((state) => state.auth);
   const menu = useRef(null);
   useOutsideAlerter(menu);
 
   function useOutsideAlerter(ref) {
     useEffect(() => {
-        /**
-         * Alert if clicked on outside of element
-         */
+    
         function handleClickOutside(event) {
             if (ref.current && !ref.current.contains(event.target)) {
                 props.closeMenu();
@@ -34,12 +30,6 @@ const Sidebar = (props) => {
         };
     }, [ref]);
 }
-
-  // const showMenu = () => {
-  //   setshowprofile(!showm);
-  // };
-
-  //setCloseprofile (props.closeM);
 
   return (
     <div className="sidebar">
@@ -57,7 +47,6 @@ const Sidebar = (props) => {
             <div>
               <MoreVertIcon onClick={props.showMenu} />
             </div>
-            {/*showm ? null : <MenuProfile />*/}
             {props.closeM ? null : <MenuProfile />}
           </div>
         </div>
