@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState,useEffect } from "react";
 import { Avatar, IconButton } from "@material-ui/core";
 import {
   AttachFile,
@@ -9,16 +9,15 @@ import {
 import "./Chat.css";
 import MicIcon from "@material-ui/icons/Mic";
 
+
 const Chat = (props) => {
   const [input, setInput] = useState("");
+  const [messages,setMessages] = useState([]);
 
   const sendMessage = async (e) => {
     e.preventDefault();
-
-    setInput("");
-  };
-
-  if (input){
+    //const postNewmessage = async (input,conversationId,userId) => {
+      if (input){
         let response = await fetch(
           `https://academlo-whats.herokuapp.com/api/v1/messages`,
           {
@@ -40,28 +39,11 @@ const Chat = (props) => {
         setInput("");
         return(results);
         //console.log(results);
-
+      
       }
-
-    useEffect(()=>{
+      
   
-      const getMessages = async(idToSearch) => {
-        try {
-          const res = await fetch(`https://academlo-whats.herokuapp.com/api/v1/conversations/${idToSearch}/messages`)
-          const response = await res.json();
-          console.log(response);
-          const messages=await response[0].messages;
-          setMessages(messages);
-        } 
-        catch (error) {
-          console.log(error)
-        }
-      }
-      getMessages(props.conversation._id);
-  
-     //setConversations(getConversations(props.id));
-    },[props.conversation]);
-  
+}
   useEffect(()=>{
     
     const getMessages = async(idToSearch) => {
@@ -85,9 +67,12 @@ const Chat = (props) => {
     
     <div className="chat">
       <div className="chat__header">
-        <Avatar src={`${props.conversation.membersObj[0].photoUrl}`}/>
+        {
+        <Avatar src={`${props.conversation.membersObj[0].photoUrl}`} />
+        
+        } 
         <div className="chat__headerInfo">
-          <h3>{props.conversation.membersObj[0].username}</h3>
+        <h3>{props.conversation.membersObj[0].username}</h3>
           <p>Visto por ultima vez a las... </p>
         </div>
         <div className="chat__headerRight">
@@ -125,9 +110,7 @@ const Chat = (props) => {
       <div className="chat__footer">
         <InsertEmoticon />
         <form onSubmit={sendMessage}>
-          <input
-            className="chat__input"
-
+          <input className="chat__input"
             value={input}
             onChange={(e) => {
               setInput(e.target.value);
