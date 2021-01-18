@@ -42,8 +42,7 @@ export const login = (provider, email, password) => {
               .signInWithPopup(facebookProvider);
             let userupdt = firebase.auth().currentUser;
             userupdt.updateProfile({
-              photoURL:
-                `https://graph.facebook.com/${user.providerData[0].uid}/picture?access_token=${credential.accessToken}`,
+              photoURL: `https://graph.facebook.com/${user.providerData[0].uid}/picture?access_token=${credential.accessToken}`,
             });
             //console.log(user);
             dispatch(setUser(user));
@@ -60,8 +59,8 @@ export const login = (provider, email, password) => {
   };
 };
 
-export const Register = (email, password, name, lastname, namec) => {
-  return (dispatch, state) => {
+export const Register = (email, password, name, lastname) => {
+  return (dispatch) => {
     return new Promise(async (resolve, reject) => {
       try {
         let { user } = await firebase
@@ -73,7 +72,13 @@ export const Register = (email, password, name, lastname, namec) => {
           photoURL:
             "https://upload.wikimedia.org/wikipedia/commons/f/f4/User_Avatar_2.png",
         });
-        postNewUser(email, name, lastname, user.uid, "https://upload.wikimedia.org/wikipedia/commons/f/f4/User_Avatar_2.png");
+        postNewUser(
+          email,
+          name,
+          lastname,
+          user.uid,
+          "https://upload.wikimedia.org/wikipedia/commons/f/f4/User_Avatar_2.png"
+        );
         dispatch(setUser(user));
 
         resolve(true);
@@ -116,15 +121,17 @@ export const checkActiveSession = (sesionactive) => {
 };
 
 export const getUsers = async (email, name, lastname, uid, photoURL) => {
-  let response = await fetch(`https://academlo-whats.herokuapp.com/api/v1/users`);
+  let response = await fetch(
+    `https://academlo-whats.herokuapp.com/api/v1/users`
+  );
   let responseJ = await response.json();
-  let findUser = responseJ.find(user => user.uid === uid );
-  if(findUser){
-
+  let findUser = responseJ.find((user) => user.uid === uid);
+  if (findUser) {
+  } else {
+    postNewUser(email, name, lastname, uid, photoURL);
   }
-  else{ postNewUser(email, name, lastname, uid, photoURL);}
   //console.log(responseJ);
-}
+};
 
 export const postNewUser = async (email, name, lastname, uid, photoURL) => {
   let response = await fetch(
@@ -141,7 +148,7 @@ export const postNewUser = async (email, name, lastname, uid, photoURL) => {
         uid: uid,
         username: name + " " + lastname,
         photoUrl: photoURL,
-          //"https://upload.wikimedia.org/wikipedia/commons/f/f4/User_Avatar_2.png",
+        //"https://upload.wikimedia.org/wikipedia/commons/f/f4/User_Avatar_2.png",
       }),
     }
   );

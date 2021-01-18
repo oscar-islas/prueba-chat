@@ -2,73 +2,67 @@ import React, { useState,useEffect } from "react";
 import "./Home.css";
 import Sidebar from "../Sidebar/Sidebar";
 import Chat from "../Chat/Chat";
+import NewSidebar from "../Sidebar/newChat"
+import { changeUser } from "../../usersDucks"
+import { useSelector, useDispatch } from 'react-redux';
 
 import NewSidebar from "../Sidebar/newChat"
 import {changeUser} from "../../usersDucks"
 import {useDispatch,useSelector} from "react-redux"
 
-
-
-const Home=()=> {
+function Home() {
+  const user = useSelector(state => state.auth);
   const dispatch = useDispatch();
- // const [messages, setMessages] = useState([]);
-  let [closem, setCloseprofile] = useState("false");
-  const [searchChat,setSearchChat]=useState(false);
-  const [activeConversation,setActiveConversation]=useState({})
-  const [conversationSelected,setConversationSelected]=useState(false);
-  const firebaseUser=useSelector(store=>store.auth.user);
+  let [closem, setCloseprofile] = useState(true);
+  const [searchChat, setSearchChat] = useState(false);
+  const[activeConversation, setActiveConversation] = useState({})
+  const [conversationSelected, setConversationSelected] = useState(false);
+  const firebaseUser = useSelector(store => store.auth.user);
 
-  const updateConversations=(conversation)=>{
+  const updateConversations = (conversation) => {
     console.log(conversation);
     setActiveConversation(conversation);
     setConversationSelected(true);
   }
 
   const closeMenu = () => {
-    setCloseprofile(false);
-    
+    setCloseprofile(true);
   }
 
-  const newchat=()=>{
+  const showMenu = () => {
+    setCloseprofile(!closem);
+  };
+
+  const newchat = () => {
     setSearchChat(true);
-    
+
   }
 
-  const closeNewchat=()=>{
+  const closeNewchat = () => {
     setSearchChat(false);
   }
- // dispatch(changeUser(firebaseUser));
-  useEffect(()=>{
+  useEffect(() => {
+    const getActiveUser = () => {
+      dispatch(changeUser(firebaseUser));
+    }
+    getActiveUser();
+  }, [dispatch, firebaseUser]);
 
-  const getActiveUser =  () => {
-    dispatch(changeUser(firebaseUser));
-  }
-
-  getActiveUser();
-},[dispatch,firebaseUser]);
-
-const activeUser=useSelector(store=>store.users.activeUser)
-//console.log(activeUser)
+  const activeUser = useSelector(store => store.users.activeUser);
 
   return (
-    
-    //user ? <chat /> : <gif />
-   
-        <div className="app" onClick={closeMenu}>
+    user ? (<div className="app">
       <div className="app__body">
         {
-          searchChat?(
-          <NewSidebar close={closeNewchat} id={activeUser._id} />):(
-          <Sidebar closeM={closem} newchat={newchat} id={activeUser._id} selectConversation={updateConversations} />)
+          searchChat ? (
+            <NewSidebar closeM={closem} showMenu={showMenu} closeMenu={closeMenu} close={closeNewchat} id={activeUser._id} />) : (
+              <Sidebar closeM={closem} newchat={newchat} id={activeUser._id} selectConversation={updateConversations} />)
         }
         {
-          conversationSelected?<Chat  conversation={activeConversation} id={activeUser._id} />:null
+          conversationSelected ? <Chat /*messages={messages}*/conversation={activeConversation} id={activeUser._id} /> : null
         }
-        
       </div>
-    </div>
-
-  
+    </div>) : (<div className="loading" href='https://dribbble.com/msaling' target='_blank'><img src='https://i.postimg.cc/Y9sR6QTW/parrots.gif' border='0' alt='parrots' /></div>)
   );
 }
 

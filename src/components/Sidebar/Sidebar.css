@@ -54,3 +54,7 @@
   background-color: #4dcdd688;
   overflow: auto;
 }
+
+.dropdown_menu {
+  display: flex;
+}

@@ -44,11 +44,10 @@ export default function RegisterComponent(props){
     const Registeruser = async(event) => {
       event.preventDefault();
       let name=`${refName.current.value} ${refLastName.current.value}`
-      console.log(name)
-      console.log(refEmail.current.value, refPassword.current.value)
+      //console.log(name)
+      //console.log(refEmail.current.value, refPassword.current.value)
       if(refEmail.current.value=== "" ){
         swal("¡Para registrarte!", "¡Ingresa tu dirección de correo!", "warning");
-        //alert('Debe ingresar su email para poder registrarse')
       }
       if(refPassword.current.value=== "" ){
         swal("¡Para registrarte!", "¡Ingresa tu contraseña!", "warning");

@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/NavBar/NavBar.jsx";
@@ -7,18 +7,17 @@ import LoginContainer from "./containers/LoginContainer";
 import RegisterContainer from "./containers/RegisterContainer";
 import ForgotpasswordContainer from "./containers/ForgotpasswordContainer";
 import ProtectedComponent from "./components/ProtectedComponent/ProtectedComponent";
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch, Provider } from "react-redux";
 import firebase from "./firebase";
 import { setUser, checkActiveSession } from "./actions/authActions";
-import { Provider } from "react-redux";
-import store from "./store"
+import store from "./store";
 
 export default function App() {
-  const user = useSelector(state => state.auth)
+  const user = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  useEffect(()=>{
-    firebase.auth().onAuthStateChanged(function(user) {
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         dispatch(setUser(user));
         dispatch(checkActiveSession(true));
@@ -28,26 +27,27 @@ export default function App() {
         // No user is signed in.
       }
     });
-  },[dispatch]);
+
+  }, [dispatch]);
 
   return (
     <Router>
-        <Provider store={store}>
-      <Switch>
-        <Route exact path="/">
+      <Provider store={store}>
+        <Switch>
+          <Route exact path="/">
             <LoginContainer />
-        </Route>
-        <Route exact path="/register" component={RegisterContainer} />
-        <Route exact path="/recover" component={ForgotpasswordContainer} />
-        <ProtectedComponent user={user}>
+          </Route>
+          <Route exact path="/register" component={RegisterContainer} />
+          <Route exact path="/recover" component={ForgotpasswordContainer} />
+          <ProtectedComponent user={user}>
             <NavBar />
-            <Route exact path="/chat" component={Home} /> 
-        </ProtectedComponent>
-        <ProtectedComponent>
+            <Route exact path="/chat" component={Home} />
+          </ProtectedComponent>
+          <ProtectedComponent>
             <NavBar />
             <Route exact path="/chat/:id" component={Home} />
-        </ProtectedComponent>
-      </Switch>
+          </ProtectedComponent>
+        </Switch>
       </Provider>
     </Router>
   );

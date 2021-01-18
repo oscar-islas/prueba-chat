@@ -1,0 +1,9 @@
+*,* :after, *:before {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+}
+
+.loading {
+   margin-left: 40%;
+}
