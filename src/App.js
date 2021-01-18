@@ -27,6 +27,7 @@ export default function App() {
         // No user is signed in.
       }
     });
+
   }, [dispatch]);
 
   return (

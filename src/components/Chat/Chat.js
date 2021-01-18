@@ -9,8 +9,7 @@ import {
 import "./Chat.css";
 import MicIcon from "@material-ui/icons/Mic";
 
-
-const Chat = ({ props }) => {
+const Chat = (props) => {
   const [input, setInput] = useState("");
 
   const sendMessage = async (e) => {
@@ -64,7 +63,28 @@ const Chat = ({ props }) => {
      //setConversations(getConversations(props.id));
     },[props.conversation]);
   
+}
+  useEffect(()=>{
+    
+    const getMessages = async(idToSearch) => {
+      try {
+        const res = await fetch(`https://academlo-whats.herokuapp.com/api/v1/conversations/${idToSearch}/messages`)
+        const response = await res.json();
+        console.log(response);
+        const messages=await response[0].messages;
+        setMessages(messages);
+      } 
+      catch (error) {
+        console.log(error)
+      }
+    }
+    getMessages(props.conversation._id);
+    
+   //setConversations(getConversations(props.id));
+  },[props.conversation]);
+
   return (
+    
     <div className="chat">
       <div className="chat__header">
         <Avatar src={`${props.conversation.membersObj[0].photoUrl}`}/>
@@ -86,7 +106,8 @@ const Chat = ({ props }) => {
       </div>
 
       <div className="chat__body">
-        {messages.map((message, i) => {
+        {
+        messages.map((message, i) => {
           return (
             <p
               key={i}
@@ -96,10 +117,11 @@ const Chat = ({ props }) => {
             >
               <span className="chat__name">{message.userId===props.id?props.conversation.membersObj[1].username:props.conversation.membersObj[0].username}</span>
               {message.message}
-              <span className="chat__timestamp">{message.timestamp}</span>
+              {/* <span className="chat__timestamp">{message.timestamp}</span> */}
             </p>
           );
-        })}
+        })
+        }
       </div>
 
       <div className="chat__footer">
@@ -107,6 +129,7 @@ const Chat = ({ props }) => {
         <form onSubmit={sendMessage}>
           <input
             className="chat__input"
+
             value={input}
             onChange={(e) => {
               setInput(e.target.value);
@@ -121,7 +144,9 @@ const Chat = ({ props }) => {
         <MicIcon />
       </div>
     </div>
-  );
+    
+  )
+
 };
 
 export default Chat;

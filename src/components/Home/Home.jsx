@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState,useEffect } from "react";
 import "./Home.css";
 import Sidebar from "../Sidebar/Sidebar";
 import Chat from "../Chat/Chat";
@@ -6,6 +6,9 @@ import NewSidebar from "../Sidebar/newChat"
 import { changeUser } from "../../usersDucks"
 import { useSelector, useDispatch } from 'react-redux';
 
+import NewSidebar from "../Sidebar/newChat"
+import {changeUser} from "../../usersDucks"
+import {useDispatch,useSelector} from "react-redux"
 
 function Home() {
   const user = useSelector(state => state.auth);
@@ -60,7 +63,6 @@ function Home() {
         }
       </div>
     </div>) : (<div className="loading" href='https://dribbble.com/msaling' target='_blank'><img src='https://i.postimg.cc/Y9sR6QTW/parrots.gif' border='0' alt='parrots' /></div>)
-
   );
 }
 
