@@ -6,10 +6,6 @@ import NewSidebar from "../Sidebar/newChat"
 import { changeUser } from "../../usersDucks"
 import { useSelector, useDispatch } from 'react-redux';
 
-import NewSidebar from "../Sidebar/newChat"
-import {changeUser} from "../../usersDucks"
-import {useDispatch,useSelector} from "react-redux"
-
 function Home() {
   const user = useSelector(state => state.auth);
   const dispatch = useDispatch();

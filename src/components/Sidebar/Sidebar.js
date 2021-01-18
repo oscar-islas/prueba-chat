@@ -5,7 +5,7 @@ import DonutLargeIcon from "@material-ui/icons/DonutLarge";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { IconButton, Avatar } from "@material-ui/core";
 import { SearchOutlined } from "@material-ui/icons";
-import SidebarChatt from "../SidebarChat/SidebarChat_";
+import SidebarChat from "../SidebarChat/SidebarChat_";
 import MenuProfile from "../menuProfile";
 import {useSelector} from "react-redux"
 

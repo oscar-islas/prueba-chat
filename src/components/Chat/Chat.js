@@ -43,7 +43,6 @@ const Chat = (props) => {
 
       }
 
-    }
     useEffect(()=>{
   
       const getMessages = async(idToSearch) => {
@@ -63,7 +62,6 @@ const Chat = (props) => {
      //setConversations(getConversations(props.id));
     },[props.conversation]);
   
-}
   useEffect(()=>{
     
     const getMessages = async(idToSearch) => {
