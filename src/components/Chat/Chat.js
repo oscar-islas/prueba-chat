@@ -12,7 +12,6 @@ import MicIcon from "@material-ui/icons/Mic";
 
 const Chat = ({ props }) => {
   const [input, setInput] = useState("");
-  const [messages,setMessages] = useState([]);
 
   const sendMessage = async (e) => {
     e.preventDefault();
