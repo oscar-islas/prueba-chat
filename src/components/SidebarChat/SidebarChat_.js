@@ -2,21 +2,15 @@ import { Avatar } from "@material-ui/core";
 import React from "react";
 import "./SidebarChat.css";
 //onClick={()=>props.createChat(props.idActive,props.partnerId)}
-const SidebarChat = (props) => {
-
-  const click=()=>{
-    props.createChat(props.idActive,props.partnerId);
-    props.close();
-  }
-
+const SidebarChatt = (props) => {
   return (
-    <div className="sidebarChat" onClick={click}>
+    <div className="sidebarChat" onClick={()=>props.selectConversation(props.conversation)}>
       <Avatar src={`${props.photo}`}/>
       <div className="sidebarChat__info">
         <h2>{props.name}</h2>
-        <p>Disponible</p>
+        <p>Último mensaje</p>
       </div>
     </div>
   );
 };
-export default SidebarChat;
+export default SidebarChatt;

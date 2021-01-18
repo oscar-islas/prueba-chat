@@ -5,9 +5,11 @@ import DonutLargeIcon from "@material-ui/icons/DonutLarge";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { IconButton, Avatar } from "@material-ui/core";
 import { SearchOutlined } from "@material-ui/icons";
-import { useSelector } from "react-redux";
-import SidebarChat from "../SidebarChat/SidebarChat";
+import SidebarChatt from "../SidebarChat/SidebarChat_";
 import MenuProfile from "../menuProfile";
+import {useSelector} from "react-redux"
+
+
 
 const Sidebar = (props) => {
   const user = useSelector((state) => state.auth);
@@ -62,6 +64,7 @@ useEffect(()=>{
 },[props.id]);
 
   return (
+
     <div className="sidebar">
       <div className="sidebar__header">
         <Avatar src={`${user.user.photoURL}`} />
@@ -100,6 +103,8 @@ useEffect(()=>{
         <SidebarChat /> */}
       </div>
     </div>
+
+    
   );
 };
 
